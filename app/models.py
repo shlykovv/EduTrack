@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -37,4 +35,3 @@ class Lesson(db.Model):
     title = db.Column(db.String(128), nullable=False)
     content = db.Column(db.Text, nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
->>>>>>> Stashed changes

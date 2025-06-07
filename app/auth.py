@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
 
@@ -46,4 +44,3 @@ def logout():
     logout_user()
     flash('Вы вышли из аккаунта.')
     return redirect(url_for('auth.login'))
->>>>>>> Stashed changes
