@@ -12,15 +12,18 @@ login_manger.login_view = 'auth.login'
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.config')
+    app.config.from_object('config.Config')
     
     db.init_app(app)
     migrate.init_app(app, db)
     login_manger.init_app(app)
     
-    from .routes import main
-    from .auth import auth_bp
+    from app.routes import main
+    from app.auth import auth_bp
+    from app.courses import course_bp
+    
     app.register_blueprint(main)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(course_bp)
     
     return app
