@@ -30,7 +30,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and User.check_password(user.password.data):
+        if user and user.check_password(form.password.data):
             login_user(user)
             flash('Вы вошли в систему.')
             return redirect(url_for('main.index'))

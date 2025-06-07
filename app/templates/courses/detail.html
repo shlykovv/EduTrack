@@ -1,0 +1,9 @@
+<h2>{{ course.title }}</h2>
+<p>{{ course.description }}</p>
+
+<h3>Уроки</h3>
+<ul>
+    {% for lesson in course.lessons %}
+        <li>{{ lesson.title }}</li>
+    {% endfor %}
+</ul>

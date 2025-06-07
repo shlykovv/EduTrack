@@ -21,3 +21,17 @@ class User(UserMixin, db.Model):
 @login_manger.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    lessons = db.relationship('Lesson', backref='course', lazy=True)
+
+
+class Lesson(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
