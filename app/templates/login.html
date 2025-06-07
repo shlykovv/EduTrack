@@ -1,0 +1,10 @@
+<h2>Вход</h2>
+<form method="post">
+
+    {% for field in form %}
+        {{ field.label }} {{ field }}
+        {% for error in field.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+    {% endfor %}
+</form>

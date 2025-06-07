@@ -18,9 +18,12 @@ def create_app():
     migrate.init_app(app, db)
     login_manger.init_app(app)
     
-    from .routes import main
-    from .auth import auth_bp
+    from app.routes import main
+    from app.auth import auth_bp
+    from app.courses import course_bp
+    
     app.register_blueprint(main)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(course_bp)
     
     return app
