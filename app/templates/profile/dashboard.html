@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+  <h2>Личный кабинет</h2>
+  <p>Добро пожаловать, {{ current_user.name or current_user.email }}!</p>
+
+  {% for course, progress in progress_map.items() %}
+    <h3>{{ course.title }}</h3>
+    <ul>
+      {% for item in progress %}
+        <li>
+          {{ item.lesson.title }} —
+          {% if item.completed %} ✅ Пройден {% else %} ⏳ Не пройден {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+{% endblock content %}

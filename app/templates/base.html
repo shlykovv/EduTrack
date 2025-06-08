@@ -10,6 +10,8 @@
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('courses.course_list') }}">Список курсов</a>
             <a href="{{ url_for('profile.dashboard') }}">Кабинет</a>
+            <a href="{{ url_for('profile.edit_profile') }}">Редактировать профиль</a> |
+            <a href="{{ url_for('profile.change_password') }}">Сменить пароль</a>
             <a href="{{ url_for('auth.logout') }}">Выйти</a>
         {% else %}
             <a href="{{ url_for('auth.login') }}">Войти</a>
