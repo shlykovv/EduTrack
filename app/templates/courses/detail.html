@@ -1,9 +1,22 @@
-<h2>{{ course.title }}</h2>
-<p>{{ course.description }}</p>
+{% extends "base.html" %}
 
+
+{% block content %}
 <h3>Уроки</h3>
 <ul>
-    {% for lesson in course.lessons %}
-        <li>{{ lesson.title }}</li>
-    {% endfor %}
+  {% for lesson in course.lessons %}
+    <li>
+      {{ lesson.title }}
+
+      <form method="post" action="{{ url_for('courses.complete_lesson', lesson_id=lesson.id) }}" style="display: inline;">
+        {% set progress = lesson.user_progress | selectattr("user_id", "equalto", current_user.id) | first %}
+        {% if progress and progress.completed %}
+          <button type="submit">✅ Пройден</button>
+        {% else %}
+          <button type="submit">🔲 Не пройден</button>
+        {% endif %}
+      </form>
+    </li>
+  {% endfor %}
 </ul>
+{% endblock content %}

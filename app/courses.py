@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 
 from app import db
-from app.models import Course, Lesson
+from app.models import Course, Lesson, LessonProgress
 
 
 course_bp = Blueprint('courses', __name__)
@@ -32,3 +33,22 @@ def subscribe(course_id):
     else:
         flash('Вы уже записаны на этот курс.')
     return redirect(url_for('profile.dashboard'))
+
+
+@course_bp.route('/lessons/<int:lesson_id>/complete', methods=['POST'])
+@login_required
+def complete_lesson(lesson_id):
+    progress = LessonProgress.query.filter_by(
+        user_id=current_user.id,
+        lesson_id=lesson_id
+    ).first()
+    
+    if not progress:
+        progress = LessonProgress(user_id=current_user.id, lesson_id=lesson_id, completed=True)
+        db.session.add(progress)
+    else:
+        progress.completed = not progress.completed
+    
+    db.session.commit()
+    flash('Прогресс обновлён.')
+    return redirect(request.referrer or url_for('courses.course_list'))

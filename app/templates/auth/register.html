@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+
+{% block content %}
 <h2>Регистрация</h2>
 <form method="post">
     {{ form.hiddent_tag() }}
@@ -8,3 +12,4 @@
 
     {{ form.submit() }}
 </form>
+{% endblock content %}

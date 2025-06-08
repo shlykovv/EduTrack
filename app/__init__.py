@@ -21,9 +21,11 @@ def create_app():
     from app.routes import main
     from app.auth import auth_bp
     from app.courses import course_bp
+    from app.profile import profile_bp
     
     app.register_blueprint(main)
     app.register_blueprint(auth_bp)
     app.register_blueprint(course_bp)
+    app.register_blueprint(profile_bp)
     
     return app
