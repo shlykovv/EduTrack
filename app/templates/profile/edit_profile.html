@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Редактирование профиля</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.name.label }} {{ form.name(size=32) }}<br>
+    {{ form.email.label }} {{ form.email(size=32) }}<br>
+    {{ form.submit() }}
+  </form>
+{% endblock %}
