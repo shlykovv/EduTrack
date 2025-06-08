@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Главный HTML файл{% endblock title %}</title>
+</head>
+<body>
+    {% block menu %}
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('courses.course_list') }}">Список курсов</a>
+            <a href="{{ url_for('profile.dashboard') }}">Кабинет</a>
+            <a href="{{ url_for('auth.logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Войти</a>
+        {% endif %}
+    {% endblock menu %}
+    {% block content%}{% endblock content %}
+</body>
+</html>
