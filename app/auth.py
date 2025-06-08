@@ -22,7 +22,7 @@ def register():
         db.session.commit()
         flash('Регистрация прошла успешно, Войдите.')
         return redirect(url_for('auth.login'))
-    return render_template('register.html', form=form)
+    return render_template('auth/register.html', form=form)
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -35,7 +35,7 @@ def login():
             flash('Вы вошли в систему.')
             return redirect(url_for('main.index'))
         flash('Неверный email или пароль.')
-    return render_template('login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @auth_bp.route('/logout')
