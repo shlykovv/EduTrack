@@ -1,3 +1,4 @@
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 
@@ -19,6 +20,19 @@ def course_list():
 def course_detail(course_id):
     course = Course.query.get_or_404(course_id)
     return render_template('courses/detail.html', course=course)
+
+
+@course_bp.route('/course/<int:course_id>/subscribe')
+@login_required
+def subscribe(course_id):
+    course = Course.query.get_or_404(course_id)
+    if course not in current_user.courses:
+        current_user.courses.append(course)
+        db.session.commit()
+        flash(f'Вы записались на курс "{course.title}".')
+    else:
+        flash('Вы уже записаны на этот курс.')
+    return redirect(url_for('profile.dashboard'))
 
 
 @course_bp.route('/lessons/<int:lesson_id>/complete', methods=['POST'])
