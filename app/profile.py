@@ -12,7 +12,7 @@ profile_bp = Blueprint('profile', __name__)
 @profile_bp.route('/dashboard')
 @login_required
 def dashboard():
-    courses = Course.query.all()
+    courses = current_user.courses
     progress_map = {}
     
     for course in courses:
@@ -21,10 +21,9 @@ def dashboard():
             progress = LessonProgress.query.filter_by(
                 user_id=current_user.id, lesson_id=lesson.id
             ).first()
-            course_progress.append({
-                'lesson': lesson,
-                'completed': progress.completed if progress else False
-            })
+            course_progress.append((
+                lesson, progress.completed if progress else False
+            ))
         progress_map[course] = course_progress
     
     return render_template('profile/dashboard.html', progress_map=progress_map)
