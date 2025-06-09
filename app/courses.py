@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 
 from app import db
 from app.models import Course, Lesson, LessonProgress
+from app.utils import get_course_progress
 
 
 course_bp = Blueprint('courses', __name__)
@@ -19,7 +20,8 @@ def course_list():
 @login_required
 def course_detail(course_id):
     course = Course.query.get_or_404(course_id)
-    return render_template('courses/detail.html', course=course)
+    progress = get_course_progress(current_user.id, course)
+    return render_template('courses/detail.html', course=course, progress=progress)
 
 
 @course_bp.route('/course/<int:course_id>/subscribe')

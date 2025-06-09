@@ -16,6 +16,12 @@
           <button type="submit">🔲 Не пройден</button>
           <a href="{{ url_for('courses.subscribe', course_id=lesson.id) }}">Записаться на курс</a>
         {% endif %}
+        <h2>{{ course.title }}</h2>
+        <p>Прогресс: {{ progress }}%</p>
+
+        <div style="background-color: #ddd; width: 100%; height: 20px; border-radius: 5px;">
+            <div style="width: {{ progress }}%; height: 100%; background-color: #4caf50; border-radius: 5px;"></div>
+        </div>
       </form>
     </li>
   {% endfor %}
