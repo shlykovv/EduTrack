@@ -8,15 +8,16 @@
     <li>
       {{ lesson.title }}
 
-      <form method="post" action="{{ url_for('courses.complete_lesson', lesson_id=lesson.id) }}" style="display: inline;">
-        {% set progress = lesson.user_progress | selectattr("user_id", "equalto", current_user.id) | first %}
-        {% if progress and progress.completed %}
-          <button type="submit">✅ Пройден</button>
-        {% else %}
-          <button type="submit">🔲 Не пройден</button>
-          <a href="{{ url_for('courses.subscribe', course_id=lesson.id) }}">Записаться на курс</a>
-        {% endif %}
-      </form>
+        <form method="post" action="{{ url_for('courses.complete_lesson', lesson_id=lesson.id) }}" style="display: inline;">
+            {% set progress = lesson.user_progress | selectattr("user_id", "equalto", current_user.id) | first %}
+            {% if progress and progress.completed %}
+                <button type="submit">✅ Пройден</button>
+                <a href="{{ url_for('courses.subscribe', course_id=lesson.id) }}">Повторить материал</a>
+            {% else %}
+                <button type="submit">🔲 Не пройден</button>
+                <a href="{{ url_for('courses.subscribe', course_id=lesson.id) }}">Записаться на курс</a>
+            {% endif %}
+        </form>
     </li>
   {% endfor %}
   <h2>{{ course.title }}</h2>
