@@ -14,6 +14,7 @@
           <button type="submit">✅ Пройден</button>
         {% else %}
           <button type="submit">🔲 Не пройден</button>
+          <a href="{{ url_for('courses.subscribe', course_id=lesson.id) }}">Записаться на курс</a>
         {% endif %}
       </form>
     </li>

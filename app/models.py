@@ -48,8 +48,8 @@ class Lesson(db.Model):
 
 class LessonProgress(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    lesson_id = db.Column(db.Integer, db.ForeignKey('lesson.id'))
     completed = db.Column(db.Boolean, default=False)
     
     user = db.relationship('User', backref='lesson_progress')
