@@ -16,14 +16,15 @@ def dashboard():
     progress_map = {}
     
     for course in courses:
-        course_progress = {}
+        course_progress = []
         for lesson in course.lessons:
             progress = LessonProgress.query.filter_by(
                 user_id=current_user.id, lesson_id=lesson.id
             ).first()
-            course_progress.append((
-                lesson, progress.completed if progress else False
-            ))
+            course_progress.append({
+                'lesson': lesson,
+                'completed': progress.completed if progress else False
+            })
         progress_map[course] = course_progress
     
     return render_template('profile/dashboard.html', progress_map=progress_map)
