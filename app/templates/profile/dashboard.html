@@ -11,8 +11,12 @@
     <ul>
       {% for item in progress %}
         <li>
-          {{ item.lesson.title }} —
-          {% if item.completed %} ✅ Пройден {% else %} ⏳ Не пройден {% endif %}
+          <a href="{{ url_for('lessons.lesson_detail', lesson_id=item.lesson.id) }}">
+            {{ item.lesson.title }}
+          </a>
+          {% if item.completed %} 
+            ✅ 
+          {% endif %}
         </li>
       {% endfor %}
     </ul>

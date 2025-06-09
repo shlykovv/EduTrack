@@ -1,17 +1,18 @@
-{% extends "base.html" %}
-
-
+{% extends 'base.html' %}
 {% block content %}
 
 <h2>{{ lesson.title }}</h2>
+<hr>
 <p>{{ lesson.content }}</p>
 
 {% if progress and progress.completed %}
-    <p><strong>Вы уже завершили этот урок ✅</strong></p>
+    <p style="color: green;">✅ Урок пройден</p>
 {% else %}
-    <form action="{{ url_for('main.complete_lesson', lesson_id=lesson.id) }}" method="post">
-        <button type="submit">Отметить как завершённый</button>
+    <form method="post" action="{{ url_for('lessons.complete_lesson', lesson_id=lesson.id) }}">
+        <button type="submit">Отметить как пройден</button>
     </form>
 {% endif %}
 
-{% endblock content %}
+<p><a href="{{ url_for('courses.course_detail', course_id=lesson.course.id) }}">← Назад к курсу</a></p>
+
+{% endblock %}

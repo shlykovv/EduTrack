@@ -6,7 +6,7 @@
 <ul>
   {% for lesson in course.lessons %}
     <li>
-      {{ lesson.title }}
+      <a href="{{ url_for('lessons.lesson_detail', lesson_id=lesson.id) }}">{{ lesson.title }}</a>
 
         <form method="post" action="{{ url_for('courses.complete_lesson', lesson_id=lesson.id) }}" style="display: inline;">
             {% set progress = lesson.user_progress | selectattr("user_id", "equalto", current_user.id) | first %}
