@@ -40,6 +40,12 @@ def subscribe(course_id):
 @course_bp.route('/lessons/<int:lesson_id>/complete', methods=['POST'])
 @login_required
 def complete_lesson(lesson_id):
+    lesson = Lesson.query.get_or_404(lesson_id)
+    
+    if lesson.course not in current_user.courses:
+        flash('Вы не записаны на этот курс.', 'warning')
+        return redirect(url_for('main.index'))
+    
     progress = LessonProgress.query.filter_by(
         user_id=current_user.id,
         lesson_id=lesson_id
@@ -47,10 +53,10 @@ def complete_lesson(lesson_id):
     
     if not progress:
         progress = LessonProgress(user_id=current_user.id, lesson_id=lesson_id, completed=True)
-        db.session.add(progress)
-    else:
-        progress.completed = not progress.completed
     
+    progress.completed = True
+    db.session.add(progress)
     db.session.commit()
-    flash('Прогресс обновлён.')
-    return redirect(request.referrer or url_for('courses.course_list'))
+    
+    flash('Урок отмечен как ройден!', 'success')
+    return redirect(url_for('lessons.lesson_detail'), lesson_id=lesson.id)

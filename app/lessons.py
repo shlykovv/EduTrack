@@ -12,6 +12,11 @@ lesson_bp = Blueprint('lessons', __name__)
 @login_required
 def lesson_detail(lesson_id):
     lesson = Lesson.query.get_or_404(lesson_id)
+    
+    if lesson.course not in current_user.courses:
+        flash('Вы не записаны на этот курс.', 'warning')
+        return redirect(url_for('main.index'))
+
     progress = LessonProgress.query.filter_by(
         user_id=current_user.id, lesson_id=lesson.id
     ).first()
@@ -25,16 +30,21 @@ def lesson_detail(lesson_id):
 @login_required
 def complete_lesson(lesson_id):
     lesson = Lesson.query.get_or_404(lesson_id)
+
+    if lesson.course not in current_user.courses:
+        flash("Вы не записаны на этот курс.", "warning")
+        return redirect(url_for('main.index'))
+
     progress = LessonProgress.query.filter_by(
         user_id=current_user.id, lesson_id=lesson.id
     ).first()
     if not progress:
         progress = LessonProgress(
             user_id=current_user.id,
-            lesson_id=lesson.id,
-            completed=True)
-    else:
-        progress.completed = True
+            lesson_id=lesson.id)
+
+    progress.completed = True
+    db.session.add(progress)
     db.session.commit()
-    flash('Урок отмечен как завершённый!')
+    flash('Урок отмечен как пройден!', 'success')
     return redirect(url_for('lessons.lesson_detail', lesson_id=lesson.id))
